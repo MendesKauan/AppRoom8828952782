@@ -33,7 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.edu.up.AppRoom8828952782.InventoryTopAppBar
 import br.edu.up.AppRoom8828952782.R
-import br.edu.up.AppRoom8828952782.data.Item
+import br.edu.up.AppRoom8828952782.data.models.Item
 import br.edu.up.AppRoom8828952782.ui.theme.InventoryTheme
 import com.example.inventory.ui.item.formatedPrice
 

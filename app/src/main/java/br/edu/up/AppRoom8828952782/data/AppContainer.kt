@@ -18,6 +18,9 @@ package br.edu.up.AppRoom8828952782.data
 
 
 import android.content.Context
+import br.edu.up.AppRoom8828952782.data.DB.ItemDataBase
+import br.edu.up.AppRoom8828952782.data.DB.openBD
+import br.edu.up.AppRoom8828952782.data.models.ItemDao
 
 /**
  * App container for Dependency injection.
@@ -33,7 +36,15 @@ class AppDataContainer(private val context: Context) : AppContainer {
     /**
      * Implementation for [ItemsRepository]
      */
+    private val database: ItemDataBase by lazy {
+        openBD(context) // Utiliza a função que você já definiu
+    }
+
+    private val itemDao: ItemDao by lazy {
+        database.getItemDao()
+    }
+
     override val itemsRepository: ItemsRepository by lazy {
-        OfflineItemsRepository()
+        OfflineItemsRepository(itemDao) //erro
     }
 }

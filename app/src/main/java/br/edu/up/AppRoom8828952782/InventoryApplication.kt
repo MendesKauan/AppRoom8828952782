@@ -19,14 +19,16 @@ package br.edu.up.AppRoom8828952782
 import android.app.Application
 import br.edu.up.AppRoom8828952782.data.AppContainer
 import br.edu.up.AppRoom8828952782.data.AppDataContainer
+import br.edu.up.AppRoom8828952782.data.models.ItemDao
 
 
-class InventoryApplication : Application() {
+class InventoryApplication() : Application() {
 
     /**
      * AppContainer instance used by the rest of classes to obtain dependencies
      */
     lateinit var container: AppContainer
+
 
     override fun onCreate() {
         super.onCreate()

@@ -16,4 +16,33 @@
 
 package br.edu.up.AppRoom8828952782.data
 
-class OfflineItemsRepository : ItemsRepository
+import br.edu.up.AppRoom8828952782.data.models.Item
+import br.edu.up.AppRoom8828952782.data.models.ItemDao
+import kotlinx.coroutines.flow.Flow
+
+class OfflineItemsRepository(
+    private val dao: ItemDao
+) : ItemsRepository {
+
+    override fun getById(idx: Int): Item {
+       return dao.getById(idx)
+    }
+
+    override suspend fun fetchAll(): Flow<List<Item>> {
+        return dao.fetchAll()
+    }
+
+    override suspend fun updateItem(Item: Item) {
+        return dao.updateItem(Item)
+    }
+
+    override suspend fun saveItem(Item: Item) {
+        return dao.saveItem(Item)
+    }
+
+    override suspend fun deleteItem(Item: Item) {
+        return dao.deleteItem(Item)
+    }
+
+
+}

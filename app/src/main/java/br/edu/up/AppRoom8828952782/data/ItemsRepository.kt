@@ -1,5 +1,14 @@
 package br.edu.up.AppRoom8828952782.data
 
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
+import br.edu.up.AppRoom8828952782.data.models.Item
+import br.edu.up.AppRoom8828952782.data.models.ItemDao
+import kotlinx.coroutines.flow.Flow
+
+
 /*
  * Copyright (C) 2023 The Android Open Source Project
  *
@@ -20,4 +29,11 @@ package br.edu.up.AppRoom8828952782.data
 /**
  * Repository that provides insert, update, delete, and retrieve of [Item] from a given data source.
  */
-interface ItemsRepository
+interface ItemsRepository {
+
+    fun getById(idx: Int) : Item
+    suspend fun fetchAll() : Flow<List<Item>>
+    suspend fun updateItem(Item: Item)
+    suspend fun saveItem(Item: Item)
+    suspend fun deleteItem(Item: Item)
+}

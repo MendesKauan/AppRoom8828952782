@@ -20,7 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import br.edu.up.AppRoom8828952782.data.Item
+import br.edu.up.AppRoom8828952782.data.models.Item
 import java.text.NumberFormat
 
 /**

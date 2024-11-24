@@ -1,4 +1,7 @@
-package br.edu.up.AppRoom8828952782.data
+package br.edu.up.AppRoom8828952782.data.models
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 /*
  * Copyright (C) 2023 The Android Open Source Project
@@ -19,9 +22,13 @@ package br.edu.up.AppRoom8828952782.data
 /**
  * Entity data class represents a single row in the database.
  */
-class Item(
+@Entity(tableName = "tab_item")
+data class Item(
+    @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val name: String,
     val price: Double,
     val quantity: Int
-)
+) {
+    constructor(): this(0, "",0.0, 0)
+}

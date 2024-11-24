@@ -1,7 +1,7 @@
 package br.edu.up.AppRoom8828952782.ui.home
 
 import androidx.lifecycle.ViewModel
-import br.edu.up.AppRoom8828952782.data.Item
+import br.edu.up.AppRoom8828952782.data.models.Item
 
 
 /**
