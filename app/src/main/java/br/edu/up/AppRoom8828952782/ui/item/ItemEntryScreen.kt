@@ -33,6 +33,11 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.dimensionResource
@@ -42,9 +47,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.edu.up.AppRoom8828952782.InventoryTopAppBar
 import br.edu.up.AppRoom8828952782.R
+import br.edu.up.AppRoom8828952782.data.models.Item
 import br.edu.up.AppRoom8828952782.ui.AppViewModelProvider
 import br.edu.up.AppRoom8828952782.ui.home.NavigationDestination
 import br.edu.up.AppRoom8828952782.ui.theme.InventoryTheme
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import java.util.Currency
 import java.util.Locale
 
@@ -60,7 +68,11 @@ fun ItemEntryScreen(
     onNavigateUp: () -> Unit,
     canNavigateBack: Boolean = true,
     viewModel: ItemEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
+
 ) {
+    val coroutineScope = rememberCoroutineScope()
+
+
     Scaffold(
         topBar = {
             InventoryTopAppBar(
@@ -73,7 +85,12 @@ fun ItemEntryScreen(
         ItemEntryBody(
             itemUiState = viewModel.itemUiState,
             onItemValueChange = viewModel::updateUiState,
-            onSaveClick = { },
+            onSaveClick = {
+                coroutineScope.launch {
+                        val newItem = viewModel.itemUiState.itemDetails.toItem()
+                        viewModel.saveItem(newItem)
+                }
+            },
             modifier = Modifier
                 .padding(
                     start = innerPadding.calculateStartPadding(LocalLayoutDirection.current),

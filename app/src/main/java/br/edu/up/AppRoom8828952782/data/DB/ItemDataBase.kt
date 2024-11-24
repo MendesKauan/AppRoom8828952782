@@ -8,15 +8,24 @@ import br.edu.up.AppRoom8828952782.data.models.Item
 import br.edu.up.AppRoom8828952782.data.models.ItemDao
 
 @Database(entities = [Item::class], version = 1)
-abstract class ItemDataBase : RoomDatabase(){
+abstract class ItemDataBase : RoomDatabase() {
+
     abstract fun getItemDao(): ItemDao
-}
 
+    companion object {
+        @Volatile
+        private var INSTANCE: ItemDataBase? = null
 
-fun openBD(context: Context): ItemDataBase {
-    return Room.databaseBuilder(
-        context.applicationContext,
-        ItemDataBase::class.java,
-        name = "ItemDataBase.db"
-    ).build()
+        fun getDatabase(context: Context): ItemDataBase {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    ItemDataBase::class.java,
+                    "ItemDataBase.db"
+                ).build()
+                INSTANCE = instance
+                instance
+            }
+        }
+    }
 }

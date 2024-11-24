@@ -20,13 +20,35 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
+import br.edu.up.AppRoom8828952782.data.ItemsRepository
 import br.edu.up.AppRoom8828952782.data.models.Item
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.NumberFormat
 
 /**
  * ViewModel to validate and insert items in the Room database.
  */
-class ItemEntryViewModel : ViewModel() {
+class ItemEntryViewModel(
+    private val repository: ItemsRepository
+) : ViewModel() {
+
+    private val _items = MutableStateFlow<List<Item>>(emptyList())
+    val items: StateFlow<List<Item>> get() = _items
+
+    init {
+        viewModelScope.launch {
+            repository.fetchAll().collectLatest {
+                list -> _items.value = list
+            }
+        }
+    }
 
     /**
      * Holds current item ui state
@@ -48,6 +70,29 @@ class ItemEntryViewModel : ViewModel() {
             name.isNotBlank() && price.isNotBlank() && quantity.isNotBlank()
         }
     }
+
+    suspend fun getById(id: Int): Item {
+        return repository.getById(id)
+    }
+
+   suspend fun saveItem(Item: Item) {
+       withContext(Dispatchers.IO) {
+            repository.saveItem(Item)
+        }
+    }
+
+    suspend fun updateItem(Item: Item){
+        viewModelScope.launch {
+            repository.updateItem(Item)
+        }
+    }
+
+    suspend fun deleteItem(Item: Item){
+        viewModelScope.launch {
+            repository.deleteItem(Item)
+        }
+    }
+
 }
 
 /**

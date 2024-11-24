@@ -41,7 +41,8 @@ object AppViewModelProvider {
         }
         // Initializer for ItemEntryViewModel
         initializer {
-            ItemEntryViewModel()
+            val app = this.inventoryApplication()
+            ItemEntryViewModel(app.repository)
         }
 
         // Initializer for ItemDetailsViewModel

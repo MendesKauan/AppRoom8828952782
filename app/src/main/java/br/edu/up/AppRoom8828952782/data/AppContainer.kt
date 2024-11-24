@@ -18,8 +18,8 @@ package br.edu.up.AppRoom8828952782.data
 
 
 import android.content.Context
+import androidx.room.Room
 import br.edu.up.AppRoom8828952782.data.DB.ItemDataBase
-import br.edu.up.AppRoom8828952782.data.DB.openBD
 import br.edu.up.AppRoom8828952782.data.models.ItemDao
 
 /**
@@ -37,7 +37,7 @@ class AppDataContainer(private val context: Context) : AppContainer {
      * Implementation for [ItemsRepository]
      */
     private val database: ItemDataBase by lazy {
-        openBD(context) // Utiliza a função que você já definiu
+        ItemDataBase.getDatabase(context)
     }
 
     private val itemDao: ItemDao by lazy {
